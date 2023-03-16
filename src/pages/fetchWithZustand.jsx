@@ -1,7 +1,6 @@
 import { Spin, Table, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
 import { useStore } from "../store/example";
 function FetchWithZustand() {
   const data = useStore((state) => state.data);

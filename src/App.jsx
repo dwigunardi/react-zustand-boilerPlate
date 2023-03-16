@@ -4,8 +4,11 @@ import { useBearStore } from "./store/example";
 import { Button, Layout, Row, Typography, Col, Input, message } from "antd";
 import { Link } from "react-router-dom";
 import './app.css'
+import { GoogleLogin, googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
+import { googleClient } from "./config/google";
 function App() {
   const [count, setCount] = useState(0);
+  const [isLogin, setLogin] = useState(false)
   const [isBlur, setOnBlur] = useState(false)
   const bears = useBearStore((state) => state.bears);
   const increase = useBearStore((state) => state.increasePopulation);
@@ -21,7 +24,18 @@ function App() {
       inputIncrease(parseInt(e.target.value))
     }
   }
+  const handleLogin = (respond) => {
+    if(respond.clientId == googleClient.web.client_id){
+      setLogin(true)
+      console.log(respond)
+    }
+  }
+  const handleLogout = () => {
+    setLogin(false)
+    googleLogout()
+  }
   return (
+    <GoogleOAuthProvider clientId={googleClient.web.client_id}>
     <div className="container">
       <Row justify={"center"} align={"middle"}>
         <Col>
@@ -43,7 +57,9 @@ function App() {
         <Typography.Title style={{ color: "ActiveCaption", textAlign:'center' }}>
           React with zustand example
         </Typography.Title>
-
+        <div style={{display:'flex', justifyContent:'center'}}>
+        {isLogin ? <Button size="large" onClick={handleLogout}>Logout</Button>  : <GoogleLogin onSuccess={(respond) => handleLogin(respond)} onError={(err) => console.log(err)} />}
+        </div>
         <Typography.Title style={{ color: "ActiveCaption",textAlign:'center'  }}>
           {bears}
         </Typography.Title>
@@ -69,6 +85,7 @@ function App() {
       <p className="read-the-docs">Check route fetch example</p>
       </Link>
     </div>
+    </GoogleOAuthProvider> 
   );
 }
 
