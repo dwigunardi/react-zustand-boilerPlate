@@ -1,6 +1,7 @@
 import { Spin, Table, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useFetch from "../hooks/useFetch";
 import { useStore } from "../store/example";
 function FetchWithZustand() {
   const data = useStore((state) => state.data);
@@ -10,7 +11,10 @@ function FetchWithZustand() {
 
   useEffect(() => {
     let mount = true
-    fetchData()
+    if(data.length < 2){
+      fetchData()
+    }
+   
     return () => {
       mount = false
     };

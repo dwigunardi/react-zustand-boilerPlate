@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import './app.css'
 import { GoogleLogin, googleLogout, GoogleOAuthProvider } from "@react-oauth/google";
 import { googleClient } from "./config/google";
+import {FcGoogle} from 'react-icons/fc'
 function App() {
-  const [count, setCount] = useState(0);
   const [isLogin, setLogin] = useState(false)
   const [isBlur, setOnBlur] = useState(false)
   const bears = useBearStore((state) => state.bears);
@@ -58,7 +58,7 @@ function App() {
           React with zustand example
         </Typography.Title>
         <div style={{display:'flex', justifyContent:'center'}}>
-        {isLogin ? <Button size="large" onClick={handleLogout}>Logout</Button>  : <GoogleLogin onSuccess={(respond) => handleLogin(respond)} onError={(err) => console.log(err)} />}
+        {isLogin ? <Button style={{display:'flex'}} size="large" onClick={handleLogout} icon={<FcGoogle style={{fontSize:28}} />}>Logout</Button>  : <GoogleLogin theme="filled_blue" onSuccess={(respond) => handleLogin(respond)} onError={(err) => console.log(err)} />}
         </div>
         <Typography.Title style={{ color: "ActiveCaption",textAlign:'center'  }}>
           {bears}
